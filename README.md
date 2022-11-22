@@ -1,10 +1,10 @@
 # Logticz
 
-Blazing fast, structured, leveled logging in Go.
+Log monitoring application from a web UI
 
 ## Install
 
-There are various ways of installing Prometheus.
+There are various ways of installing Logticz.
 
 ### Precompiled binaries
 
