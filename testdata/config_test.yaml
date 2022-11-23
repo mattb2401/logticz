@@ -1,0 +1,11 @@
+server_cfg:
+  host: "localhost"
+  port: "8098"
+
+database_cfg:
+  host: "localhost"
+  port: "3306"
+  name: "test"
+  username: "root"
+  password: "1234567"
+  schema: "postgreSQL"
