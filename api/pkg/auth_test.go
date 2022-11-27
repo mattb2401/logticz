@@ -72,6 +72,10 @@ func TestAuthentication_HandleRegistration(t *testing.T) {
 	if err != nil {
 		assert.Error(t, err)
 	}
+	pass, err := lib.HashArgonPassword("testpassword")
+	if err != nil {
+		assert.Error(t, err)
+	}
 	user := models.User{
 		ID:       1,
 		Name:     "Matt",
@@ -79,5 +83,12 @@ func TestAuthentication_HandleRegistration(t *testing.T) {
 		Password: pass,
 		Added:    time.Now(),
 	}
-
+	mock.ExpectExec(regexp.QuoteMeta(`INSERT INTO "users" ("name", "username", "password", "added") VALUES ($1, $2, $3, $4) RETURNING "id"`)).WithArgs(user.Name, user.Username, user.Password, user.Added)
+	authenticationSvc := NewAuthenticationSvc(&logger, db)
+	response, err := authenticationSvc.HandleRegistration(user.Name, user.Username, user.Password)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Equal(t, response.Username, user.Username)
+	assert.Equal(t, response.Name, user.Name)
 }
